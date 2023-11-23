@@ -23,20 +23,24 @@ jobs:
         pip install esptool
 
     - name: Make a BUILDNAME
-      run: echo "RFLINK_BUILDNAME=\"$(date '+%Y%m%d-%H%M%S')-${GITHUB_REF#refs/heads/}\"" >> $GITHUB_ENV
-
-    - name: ESP32_none_enabled
       run: |
+        echo "RFLINK_BUILDNAME=\"$(date '+%Y%m%d-%H%M%S')-${GITHUB_REF#refs/heads/}\"" >> $GITHUB_ENV
         echo "buid name $RFLINK_BUILDNAME"
-        pio run --project-conf .travis.platformio.ini --environment ESP32_none_enabled
 
-    - name: ESP32_sw
-      run: |
-        pio run --project-conf .travis.platformio.ini --environment ESP32_sw
+#    - name: ESP32_none_enabled
+#      run: |
+#        echo "buid name $RFLINK_BUILDNAME"
+#        pio run --project-conf .travis.platformio.ini --environment ESP32_none_enabled
+#
+#    - name: ESP32_sw
+#      run: |
+#        echo "buid name $RFLINK_BUILDNAME"
+#        pio run --project-conf .travis.platformio.ini --environment ESP32_sw
 
-    - name: sonoff_bridge
-      run: |
-        pio run --project-conf .travis.platformio.ini --environment sonoff_bridge
+#    - name: sonoff_bridge
+#      run: |
+#        echo "buid name $RFLINK_BUILDNAME"
+#        pio run --project-conf .travis.platformio.ini --environment sonoff_bridge
         
     - name: d1_mini
       run: |
@@ -46,10 +50,10 @@ jobs:
       if: github.event_name == 'push'
       run: |
         mkdir firmwares
-        cp .pio/build/ESP32_sw/bootloader.bin firmwares/bootloader_dio_40m.bin
-        cp .pio/build/ESP32_sw/firmware.bin firmwares/esp32-firmware-OTA.bin
-        cp .pio/build/ESP32_sw/partitions.bin firmwares/esp32-partitions.bin
-        cp .pio/build/sonoff_bridge/firmware.bin firmwares/sonoff_bridge-firmware.bin
+        #cp .pio/build/ESP32_sw/bootloader.bin firmwares/bootloader_dio_40m.bin
+        #cp .pio/build/ESP32_sw/firmware.bin firmwares/esp32-firmware-OTA.bin
+        #cp .pio/build/ESP32_sw/partitions.bin firmwares/esp32-partitions.bin
+        #cp .pio/build/sonoff_bridge/firmware.bin firmwares/sonoff_bridge-firmware.bin
         cp .pio/build/d1_mini/firmware.bin firmwares/d1_mini-firmware.bin
         cd firmwares
         cp /home/runner/.platformio/packages/framework-arduinoespressif32/tools/partitions/boot_app0.bin .
