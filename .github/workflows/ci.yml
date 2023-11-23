@@ -37,6 +37,10 @@ jobs:
     - name: sonoff_bridge
       run: |
         pio run --project-conf .travis.platformio.ini --environment sonoff_bridge
+        
+    - name: d1_mini
+      run: |
+        pio run --project-conf .travis.platformio.ini --environment d1_mini
 
     - name: Copy firmwares in 1 place
       if: github.event_name == 'push'
@@ -46,6 +50,7 @@ jobs:
         cp .pio/build/ESP32_sw/firmware.bin firmwares/esp32-firmware-OTA.bin
         cp .pio/build/ESP32_sw/partitions.bin firmwares/esp32-partitions.bin
         cp .pio/build/sonoff_bridge/firmware.bin firmwares/sonoff_bridge-firmware.bin
+        cp .pio/build/d1_mini/firmware.bin firmwares/d1_mini-firmware.bin
         cd firmwares
         cp /home/runner/.platformio/packages/framework-arduinoespressif32/tools/partitions/boot_app0.bin .
         python ../tools/esp32-makeimg.py bootloader_dio_40m.bin esp32-partitions.bin boot_app0.bin esp32-firmware-OTA.bin esp32-full.img
